@@ -374,12 +374,10 @@ iScroll.prototype = {
 
 		if (that.options.momentum) {
 			if (that.options.useTransform) {
-				var cssMatrix = getComputedStyle(that.scroller, null)[transform];
-	                        // Very lame general purpose alternative to CSSMatrix
-	                        matrix = cssMatrix.replace(/[^0-9\-.,]/g, '').split(',');
-	
-	                        x = (cssMatrix.indexOf("matrix3d") == 0) ? matrix[12] * 1 : matrix[4] * 1;
-	                        y = (cssMatrix.indexOf("matrix3d") == 0) ? matrix[13] * 1 : matrix[5] * 1;
+				// Very lame general purpose alternative to CSSMatrix
+				matrix = getComputedStyle(that.scroller, null)[transform].replace(/[^0-9\-.,]/g, '').split(',');
+				x = +(matrix[12] || matrix[4]);
+				y = +(matrix[13] || matrix[5]);
 
 			} else {
 				x = +getComputedStyle(that.scroller, null).left.replace(/[^0-9-]/g, '');
